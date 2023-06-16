@@ -30,8 +30,14 @@ async function run() {
 
     const reviewCollection = client.db("craftopiaDB").collection("reviews");
 
+    const instructorCollection = client.db("craftopiaDB").collection("instructor");
+
     app.get('/reviews',async(req, res) => {
       const result = await reviewCollection.find().toArray();
+      res.send(result);
+  })
+    app.get('/instructors',async(req, res) => {
+      const result = await instructorCollection.find().toArray();
       res.send(result);
   })
 
