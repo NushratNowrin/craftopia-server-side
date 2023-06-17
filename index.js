@@ -43,7 +43,11 @@ async function run() {
       res.send(result);
   })
     app.get('/classes',async(req, res) => {
-      const result = await instructorCollection.find().toArray();
+      const query = {};
+      const options = {
+        sort : { "students" : 1 }
+      }
+      const result = await classesCollection.find(query, options).toArray();
       res.send(result);
   })
 
