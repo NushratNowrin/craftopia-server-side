@@ -32,6 +32,8 @@ async function run() {
 			.collection("instructor");
 
 		const classesCollection = client.db("craftopiaDB").collection("classes");
+		
+		const selectedClassesCollection = client.db("craftopiaDB").collection("selectedClasses");
 
 		app.get("/reviews", async (req, res) => {
 			const result = await reviewCollection.find().toArray();
@@ -49,6 +51,18 @@ async function run() {
 			const result = await classesCollection.find(query, options).toArray();
 			res.send(result);
 		});
+
+		app.get('/selectedClasses',async(req, res) => {
+			const result = await selectedClassesCollection.find().toArray();
+			res.send(result);
+		})
+
+		app.post("/selectedClasses", async (req, res) => {
+			const selectedClass = req.body;
+			console.log(selectedClass);
+			const result = await selectedClassesCollection.insertOne(selectedClass);
+			res.send(result);
+		})
 
 		// Send a ping to confirm a successful connection
 		await client.db("admin").command({ ping: 1 });
